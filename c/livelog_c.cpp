@@ -3,10 +3,14 @@
 
 using namespace acpul;
 
+extern "C" {
+
 LiveLog *_llog = NULL;
 
-void livelog_begin(const char *filename) {
-	_llog = new LiveLog(filename);
+void livelog_init(const char *filename) {
+    if (!_llog) {
+	    _llog = new LiveLog(filename);
+    }
 }
 
 void livelog_log(const wchar_t *path, const wchar_t *s) {
@@ -19,6 +23,8 @@ void livelog_flush() {
 	if (_llog) {
 		_llog->flush();
 	}
+}
+
 }
 
 // V2 [
