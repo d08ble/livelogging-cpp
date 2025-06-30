@@ -3,13 +3,16 @@
 // ==== LiveLogBasic Implementation ====
 
 void LiveLogBasic_init(LiveLogBasic *log, const char *filename) {
+    if (!log)
+        return;
     log->file = fopen(filename, "w");
     log->stack_top = 0;
     log->path[0] = L'\0';
 }
 
 void LiveLogBasic_begin(LiveLogBasic *log, const wchar_t *path) {
-    
+    if (!log || !log->file)
+        return;
     if (log->stack_top < MAX_STACK_DEPTH) {
         log->stack[log->stack_top++] = wcsdup(log->path);
     }
@@ -18,6 +21,8 @@ void LiveLogBasic_begin(LiveLogBasic *log, const wchar_t *path) {
 }
 
 void LiveLogBasic_end(LiveLogBasic *log) {
+    if (!log || !log->file)
+        return;
     fwprintf(log->file, L"# %ls]\n", log->path);
     log->path[0] = L'\0';
 
@@ -28,14 +33,20 @@ void LiveLogBasic_end(LiveLogBasic *log) {
 }
 
 void LiveLogBasic_put(LiveLogBasic *log, const wchar_t *s) {
+    if (!log || !log->file)
+        return;
     fwprintf(log->file, L"%ls\n", s);
 }
 
 void LiveLogBasic_flush(LiveLogBasic *log) {
+    if (!log || !log->file)
+        return;
     fflush(log->file);
 }
 
 void LiveLogBasic_cleanup(LiveLogBasic *log) {
+    if (!log)
+        return;
     for (int i = 0; i < log->stack_top; i++) {
         free(log->stack[i]);
     }
