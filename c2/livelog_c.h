@@ -25,7 +25,9 @@ typedef struct LCNode_t {
     wchar_t *name;
     struct LCNode_t *children[MAX_CHILDREN];
     int child_count;
-    wchar_t text[MAX_TEXT_SIZE];
+    wchar_t *text;
+    int text_alloc_size;
+    int text_len;
 } LCNode;
 
 typedef struct {
@@ -55,5 +57,10 @@ void LiveLog_log(LiveLog *log, const wchar_t *path, const wchar_t *s);
 void LiveLog_flush(LiveLog *log);
 void LiveLog_flushNode(LiveLog *log, LCNode *node);
 void LiveLog_cleanup(LiveLog *log);
+
+void LiveLog_log_i(LiveLog *log, const wchar_t *path, const wchar_t *s, int v);
+
+// llog functions
+void llog_init(LiveLog **llog, const char *relative_path);
 
 #endif
