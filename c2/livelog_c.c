@@ -200,6 +200,14 @@ void LiveLog_log_i(LiveLog *log, const wchar_t *path, const wchar_t *s, int v) {
 	LiveLog_log(log, path, text);
 }
 
+// log pointer
+void LiveLog_log_p(LiveLog *log, const wchar_t *path, const wchar_t *s, void *p) {
+    wchar_t text[PATH_MAX];
+	swprintf(text, sizeof(text), L"%s %p\n", s, p);
+	LiveLog_log(log, path, text);
+}
+
+
 // llog API
 
 #include <pwd.h>

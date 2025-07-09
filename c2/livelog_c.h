@@ -59,6 +59,7 @@ void LiveLog_flushNode(LiveLog *log, LCNode *node);
 void LiveLog_cleanup(LiveLog *log);
 
 void LiveLog_log_i(LiveLog *log, const wchar_t *path, const wchar_t *s, int v);
+void LiveLog_log_p(LiveLog *log, const wchar_t *path, const wchar_t *s, void *p);
 
 // llog functions
 void llog_init(LiveLog **llog, const char *relative_path);
